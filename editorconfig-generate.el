@@ -3,8 +3,8 @@
 ;; Author: 10sr <8.slashes@gmail.com>
 ;; URL: https://github.com/10sr/emacs-lisp/blob/master/editorconfig-generate.el
 ;; Version: 0.1.0
-;; Package-Requires: ()
-;; Keywords: utility editorconfig
+;; Package-Requires: ((emacs "24"))
+;; Keywords: tools
 
 ;; This file is not part of GNU Emacs.
 
@@ -225,5 +225,7 @@ if BUF is omitted or nil, works for current buffer."
                     value
                     "\n")))))
     (display-buffer output-buf)))
+
+(provide 'editorconfig-generate)
 
 ;;; editorconfig-generate.el ends here
