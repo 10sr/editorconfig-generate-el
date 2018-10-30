@@ -1,7 +1,7 @@
 editorconfig-generate.el
 ========================
 
-Generate `.editorconfig` content for Buffer
+Generate `.editorconfig`
 
 
 Usage
