@@ -1,4 +1,4 @@
-;;; editorconfig-generate.el --- Generate .editorconfig from Buffers  -*- lexical-binding: t; -*-
+;;; editorconfig-generate.el --- Generate .editorconfig for Buffers  -*- lexical-binding: t; -*-
 
 ;; Author: 10sr <8.slashes@gmail.com>
 ;; URL: https://github.com/10sr/emacs-lisp/blob/master/editorconfig-generate.el
