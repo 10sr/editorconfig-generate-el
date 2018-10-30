@@ -128,52 +128,51 @@ The indentation offset will be gotten from the first valid value
 
 
 (defvar editorconfig-generate-properties-alist
-  (setq editorconfig-generate-properties-alist
-        '(
-          ("indent_style" . (if indent-tabs-mode
-                                "tab"
-                              "space"))
-          ("indent_size" . (let ((s (editorconfig-generate-get-indent-size major-mode)))
-                             (if s
-                                 (int-to-string s)
-                               nil)))
-          ("tab_width" . (int-to-string tab-width))
-          ("end_of_line" . (let ((type (car (last (split-string (symbol-name buffer-file-coding-system)
-                                                                "-")))))
-                             (cond ((string-equal type "unix")
-                                    "lf")
-                                   ((string-equal type "mac")
-                                    "cr")
-                                   ((string-equal type "dos")
-                                    "crlf")
-                                   )))
-          ("charset" . (let ((coding (symbol-name buffer-file-coding-system)))
-                         (cond ((or (string-match-p "^utf-8" coding)
-                                    (string-match-p "^prefer-utf-8" coding))
-                                "utf-8")
-                               ((string-match-p "^latin-1" coding)
-                                "latin1")
-                               ((string-match-p "^utf-16-be" coding)
-                                "utf-16be")
-                               ((string-match-p "^utf-16-le" coding)
-                                "utf-16le")
-                               )))
-          ("trim_trailing_whitespace" . (if (or (memq 'delete-trailing-whitespace
-                                                      before-save-hook)
-                                                (memq 'delete-trailing-whitespace
-                                                      write-file-functions)
-                                                ;; There might be other hooks that
-                                                ;; have this
-                                                )
-                                            "true"
-                                          "false"))
-          ("insert_final_newline" . (if require-final-newline
-                                        ;; require-final-newline can take some sort of
-                                        ;; values, but here only nil is translated
-                                        ;; into false
-                                        "true"
-                                      "false"))
-          ))
+  '(
+    ("indent_style" . (if indent-tabs-mode
+                          "tab"
+                        "space"))
+    ("indent_size" . (let ((s (editorconfig-generate-get-indent-size major-mode)))
+                       (if s
+                           (int-to-string s)
+                         nil)))
+    ("tab_width" . (int-to-string tab-width))
+    ("end_of_line" . (let ((type (car (last (split-string (symbol-name buffer-file-coding-system)
+                                                          "-")))))
+                       (cond ((string-equal type "unix")
+                              "lf")
+                             ((string-equal type "mac")
+                              "cr")
+                             ((string-equal type "dos")
+                              "crlf")
+                             )))
+    ("charset" . (let ((coding (symbol-name buffer-file-coding-system)))
+                   (cond ((or (string-match-p "^utf-8" coding)
+                              (string-match-p "^prefer-utf-8" coding))
+                          "utf-8")
+                         ((string-match-p "^latin-1" coding)
+                          "latin1")
+                         ((string-match-p "^utf-16-be" coding)
+                          "utf-16be")
+                         ((string-match-p "^utf-16-le" coding)
+                          "utf-16le")
+                         )))
+    ("trim_trailing_whitespace" . (if (or (memq 'delete-trailing-whitespace
+                                                before-save-hook)
+                                          (memq 'delete-trailing-whitespace
+                                                write-file-functions)
+                                          ;; There might be other hooks that
+                                          ;; have this
+                                          )
+                                      "true"
+                                    "false"))
+    ("insert_final_newline" . (if require-final-newline
+                                  ;; require-final-newline can take some sort of
+                                  ;; values, but here only nil is translated
+                                  ;; into false
+                                  "true"
+                                "false"))
+    )
   "Alist of EditorConfig properties and how to get value.
 Each element should be like (PROP . SEXP)")
 
@@ -198,6 +197,7 @@ If MODE is nil this function allways returns nil."
                (eval v))
           (editorconfig-generate-take-first-valid (cdr l))))))
 
+;;;###autoload
 (defun editorconfig-generate (&optional buf)
   "Generate EditorConfig content for buffer BUF.
 if BUF is omitted or nil, works for current buffer."
