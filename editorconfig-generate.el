@@ -2,7 +2,7 @@
 
 ;; Author: 10sr <8.slashes@gmail.com>
 ;; URL: https://github.com/10sr/emacs-lisp/blob/master/editorconfig-generate.el
-;; Version: 0.1
+;; Version: 0.1.0
 ;; Package-Requires: ()
 ;; Keywords: utility editorconfig
 
@@ -23,7 +23,7 @@
 
 ;;; Commentary:
 
-;; Generate .editorconfig content for buffer.
+;; Generate .editorconfig content for buffer from current Emacs configuration.
 
 
 ;;; Code:
