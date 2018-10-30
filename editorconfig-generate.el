@@ -1,4 +1,4 @@
-;;; editorconfig-generate.el --- Generate .editorconfig from Buffers
+;;; editorconfig-generate.el --- Generate .editorconfig from Buffers  -*- lexical-binding: t; -*-
 
 ;; Author: 10sr <8.slashes@gmail.com>
 ;; URL: https://github.com/10sr/emacs-lisp/blob/master/editorconfig-generate.el
@@ -129,55 +129,55 @@ The indentation offset will be gotten from the first valid value
 
 (defvar editorconfig-generate-properties-alist
   (setq editorconfig-generate-properties-alist
-  '(
-    ("indent_style" . (if indent-tabs-mode
-                          "tab"
-                        "space"))
-    ("indent_size" . (let ((s (editorconfig-generate-indent-size major-mode)))
-                       (if s
-                           (int-to-string s)
-                         nil)))
-    ("tab_width" . (int-to-string tab-width))
-    ("end_of_line" . (let ((type (car (last (split-string (symbol-name buffer-file-coding-system)
-                                                       "-")))))
-                       (cond ((string-equal type "unix")
-                              "lf")
-                             ((string-equal type "mac")
-                              "cr")
-                             ((string-equal type "dos")
-                              "crlf")
-                             )))
-    ("charset" . (let ((coding (symbol-name buffer-file-coding-system)))
-                   (cond ((or (string-match-p "^utf-8" coding)
-                              (string-match-p "^prefer-utf-8" coding))
-                          "utf-8")
-                         ((string-match-p "^latin-1" coding)
-                          "latin1")
-                         ((string-match-p "^utf-16-be" coding)
-                          "utf-16be")
-                         ((string-match-p "^utf-16-le" coding)
-                          "utf-16le")
-                         )))
-    ("trim_trailing_whitespace" . (if (or (memq 'delete-trailing-whitespace
-                                                before-save-hook)
-                                          (memq 'delete-trailing-whitespace
-                                                write-file-functions)
-                                          ;; NOTE: Are there other hooks that
-                                          ;; can contain this function?
-                                          )
-                                      "true"
-                                    "false"))
-    ("insert_final_newline" . (if require-final-newline
-                                  ;; require-final-newline can take some sort of
-                                  ;; values, but here only nil is translated
-                                  ;; into false
-                                  "true"
-                                "false"))
-    ))
-  "Alist of EditorConfig properties to extract.
+        '(
+          ("indent_style" . (if indent-tabs-mode
+                                "tab"
+                              "space"))
+          ("indent_size" . (let ((s (editorconfig-generate-get-indent-size major-mode)))
+                             (if s
+                                 (int-to-string s)
+                               nil)))
+          ("tab_width" . (int-to-string tab-width))
+          ("end_of_line" . (let ((type (car (last (split-string (symbol-name buffer-file-coding-system)
+                                                                "-")))))
+                             (cond ((string-equal type "unix")
+                                    "lf")
+                                   ((string-equal type "mac")
+                                    "cr")
+                                   ((string-equal type "dos")
+                                    "crlf")
+                                   )))
+          ("charset" . (let ((coding (symbol-name buffer-file-coding-system)))
+                         (cond ((or (string-match-p "^utf-8" coding)
+                                    (string-match-p "^prefer-utf-8" coding))
+                                "utf-8")
+                               ((string-match-p "^latin-1" coding)
+                                "latin1")
+                               ((string-match-p "^utf-16-be" coding)
+                                "utf-16be")
+                               ((string-match-p "^utf-16-le" coding)
+                                "utf-16le")
+                               )))
+          ("trim_trailing_whitespace" . (if (or (memq 'delete-trailing-whitespace
+                                                      before-save-hook)
+                                                (memq 'delete-trailing-whitespace
+                                                      write-file-functions)
+                                                ;; There might be other hooks that
+                                                ;; have this
+                                                )
+                                            "true"
+                                          "false"))
+          ("insert_final_newline" . (if require-final-newline
+                                        ;; require-final-newline can take some sort of
+                                        ;; values, but here only nil is translated
+                                        ;; into false
+                                        "true"
+                                      "false"))
+          ))
+  "Alist of EditorConfig properties and how to get value.
 Each element should be like (PROP . SEXP)")
 
-(defun editorconfig-generate-indent-size (mode)
+(defun editorconfig-generate-get-indent-size (mode)
   "Get indentation offset for major mode MODE.
 
 If MODE is a derived mode of other mode and no suitable offset value was found,
@@ -188,7 +188,7 @@ If MODE is nil this function allways returns nil."
                                editorconfig-generate-mode-offset-alist))))
       (or (editorconfig-generate-take-first-valid var-list)
           (editorconfig-generate-indent-size (get mode
-                                                 'derived-mode-parent))))))
+                                                  'derived-mode-parent))))))
 
 (defun editorconfig-generate-take-first-valid (l)
   "Accept list of variables L and return the first valid value."
@@ -197,8 +197,6 @@ If MODE is nil this function allways returns nil."
       (or (and (boundp v)
                (eval v))
           (editorconfig-generate-take-first-valid (cdr l))))))
-
-;; (editorconfig-generate-take-first-valid '(a lisp-indent-offset))
 
 (defun editorconfig-generate (&optional buf)
   "Generate EditorConfig content for buffer BUF.
