@@ -1,3 +1,6 @@
+[![MELPA](https://melpa.org/packages/editorconfig-generate-badge.svg)](https://melpa.org/#/editorconfig-generate)
+    
+
 editorconfig-generate.el
 ========================
 
