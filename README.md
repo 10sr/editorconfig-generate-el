@@ -18,4 +18,4 @@ for current buffer.  Properties are extracted from current Emacs configurations.
 License
 -------
 
-This software is released under GPLv3. See `LICENSE` for details.
+This software is released under GPLv3 or any later version. See `LICENSE` for details.
