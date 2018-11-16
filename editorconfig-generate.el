@@ -189,7 +189,7 @@ If MODE is nil this function allways returns nil."
     (let ((var-list (cdr (assq mode
                                editorconfig-generate-mode-offset-alist))))
       (or (editorconfig-generate-take-first-valid var-list)
-          (editorconfig-generate-indent-size (get mode
+          (editorconfig-generate-get-indent-size (get mode
                                                   'derived-mode-parent))))))
 
 (defun editorconfig-generate-take-first-valid (l)
