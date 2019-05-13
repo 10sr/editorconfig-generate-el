@@ -1,7 +1,7 @@
 ;;; editorconfig-generate.el --- Generate .editorconfig  -*- lexical-binding: t; -*-
 
 ;; Author: 10sr <8.slashes@gmail.com>
-;; URL: https://github.com/10sr/emacs-lisp/blob/master/editorconfig-generate.el
+;; URL: https://github.com/10sr/editorconfig-generate-el
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "24"))
 ;; Keywords: tools
