@@ -212,6 +212,8 @@ if BUF is omitted or nil, works for current buffer."
                                                   filename
                                                   ">*"))))
     (with-current-buffer output-buf
+      (when (fboundp 'editorconfig-conf-mode)
+        (editorconfig-conf-mode))
       (insert "["
               filename
               "]\n\n"))
